@@ -25,7 +25,7 @@ namespace OrderBot
 
         public String OnMessage(String sInMessage)
         {
-            String sMessage = "Welcome, I am thinking of a number between 1 and 100 ... Please guess";
+            String sMessage = "This is a test\nWelcome, I am thinking of a number between 1 and 100 ... Please guess";
             switch (this.nCur)
             {
                 case State.WELCOMING:
