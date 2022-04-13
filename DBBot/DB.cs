@@ -1,7 +1,7 @@
 using System.IO;
 using System;
 
-namespace OrderBot
+namespace DBBot
 {
     public class DB
     {
