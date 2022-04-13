@@ -6,7 +6,7 @@ namespace OrderBot
     public class DB
     {
         public static string GetConnectionString(){
-            string sFName = "/Orders.db";
+            string sFName = "/ProjectDB_2.db";
             string sPrefix = "Data Source=";
             string sPath = Directory.GetCurrentDirectory();
             string[] subs = sPath.Split(Path.DirectorySeparatorChar);
