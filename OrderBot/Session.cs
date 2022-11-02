@@ -36,7 +36,7 @@ namespace OrderBot
                     break;
                 case State.PROTEIN:
                     string sProtein = sInMessage;
-                    aMessages.Add("What toppings would you like on this  " + this.oOrder.Size + " " + sProtein + " Shawarama?");
+                    aMessages.Add("What toppings would you like on this (1. pickles 2. Tzaki) " + this.oOrder.Size + " " + sProtein + " Shawarama?");
                     break;
 
 
