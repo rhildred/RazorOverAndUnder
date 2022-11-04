@@ -6,7 +6,7 @@ namespace OrderBot
     {
         private enum State
         {
-            WELCOMING, SIZE, PROTEIN
+            WELCOMING, MEDICINE,PRESCRIPTION, 
         }
 
         private State nCur = State.WELCOMING;
@@ -26,17 +26,17 @@ namespace OrderBot
                 case State.WELCOMING:
                     aMessages.Add("Welcome to Nanak Medical Store!");
                     aMessages.Add("What medicine would you like?");
-                    this.nCur = State.SIZE;
+                    this.nCur = State.MEDICINE;
                     break;
-                case State.SIZE:
+                case State.MEDICINE:
                     this.oOrder.Size = sInMessage;
                     this.oOrder.Save();
-                    aMessages.Add("What protein would you like on this  " + this.oOrder.Size + " Shawarama?");
-                    this.nCur = State.PROTEIN;
+                    aMessages.Add("What is medicine prescribed (1.Narcotic 2. Non-narcotic)  " + this.oOrder.Size + " by Doctor?");
+                    this.nCur = State.PRESCRIPTION;
                     break;
-                case State.PROTEIN:
-                    string sProtein = sInMessage;
-                    aMessages.Add("What toppings would you like on this  " + this.oOrder.Size + " " + sProtein + " Shawarama?");
+                case State.PRESCRIPTION:
+                    string sPrescription= sInMessage;
+                    aMessages.Add("What toppings would you like on this  " + this.oOrder.Size + " " + sPrescription + " Shawarama?");
                     break;
 
 
