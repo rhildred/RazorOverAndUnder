@@ -34,9 +34,16 @@ namespace OrderBot
                     aMessages.Add("What is medicine prescribed (1.Narcotic 2. Non-narcotic)  " + this.oOrder.Size + " by Doctor?");
                     this.nCur = State.PRESCRIPTION;
                     break;
+
                 case State.PRESCRIPTION:
                     string sPrescription= sInMessage;
                     aMessages.Add("What toppings would you like on this  " + this.oOrder.Size + " " + sPrescription + " Shawarama?");
+
+                case State.PROTEIN:
+                    string sProtein = sInMessage;
+                    aMessages.Add("What is recommend dose size (1. 2 per day 2. 1 in day, 1 in Night) " + this.oOrder.Size + " " + sPrescription + " by doctor
+                    ?");
+
                     break;
 
 
