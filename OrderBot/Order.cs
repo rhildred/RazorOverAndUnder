@@ -6,16 +6,20 @@ namespace OrderBot
     {
         private string _size = String.Empty;
         private string _phone = String.Empty;
+        private string _veggies1 = String.Empty;
+        private string _veggies2 = String.Empty;
+        private string _curry1 = String.Empty;
+        private string _curry2 = String.Empty;
+        private string _dessert1 = String.Empty;
 
-        public string Phone{
-            get => _phone;
-            set => _phone = value;
-        }
 
-        public string Size{
-            get => _size;
-            set => _size = value;
-        }
+        public string Phone { get => _phone; set => _phone = value; }
+        public string Size { get => _size; set => _size = value; }
+        public string Veggies1 { get => _veggies1; set => _veggies1 = value; }
+        public string Veggies2 { get => _veggies2; set => _veggies2 = value; }
+        public string Curry1 { get => _curry1; set => _curry1 = value; }
+        public string Curry2 { get => _curry2; set => _curry2 = value; }
+        public string Dessert1 { get => _dessert1; set => _dessert1 = value; }
 
         public void Save(){
            using (var connection = new SqliteConnection(DB.GetConnectionString()))

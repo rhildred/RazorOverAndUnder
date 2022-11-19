@@ -7,7 +7,7 @@ namespace OrderBot
     {
         private enum State
         {
-            WELCOMING, SIZE, DESSERT
+            WELCOMING, SIZE, CURRY1, CURRY2, VEGGY1, VEGGY2, DESSERT
         }
 
         private State nCur = State.WELCOMING;
@@ -35,7 +35,35 @@ namespace OrderBot
                     this.oOrder.Size = sInMessage;
                     orderDetails.Append(this.oOrder.Size + " meal");
                     this.oOrder.Save();
-                    aMessages.Add("What veggies would you like on this " + orderDetails.ToString() + "?");
+                    aMessages.Add("What would you like to have for option 1 curry on this " + orderDetails.ToString() + "?");
+                    this.nCur = State.CURRY1;
+                    break;
+                case State.CURRY1:
+                    this.oOrder.Curry1 = sInMessage;
+                    orderDetails.Append(", " + this.oOrder.Curry1);
+                    this.oOrder.Save();
+                    aMessages.Add("What would you like to have for option 2 curry on this " + orderDetails.ToString() + "?");
+                    this.nCur = State.CURRY2;
+                    break;
+                case State.CURRY2:
+                    this.oOrder.Curry2 = sInMessage;
+                    orderDetails.Append(", " + this.oOrder.Curry2);
+                    this.oOrder.Save();
+                    aMessages.Add("What would you like to have for option 1 veggy on this " + orderDetails.ToString() + "?");
+                    this.nCur = State.VEGGY1;
+                    break;
+                case State.VEGGY1:
+                    this.oOrder.Veggies1 = sInMessage;
+                    orderDetails.Append(", " + this.oOrder.Veggies1);
+                    this.oOrder.Save();
+                    aMessages.Add("What would you like to have for option 2 veggy on this " + orderDetails.ToString() + "?");
+                    this.nCur = State.VEGGY2;
+                    break;
+                case State.VEGGY2:
+                    this.oOrder.Veggies2 = sInMessage;
+                    orderDetails.Append(", " + this.oOrder.Veggies2);
+                    this.oOrder.Save();
+                    aMessages.Add("What dessert would you like along with this " + orderDetails.ToString() + "?");
                     this.nCur = State.DESSERT;
                     break;
                 case State.DESSERT:
