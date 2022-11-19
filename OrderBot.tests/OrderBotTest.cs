@@ -26,7 +26,6 @@ namespace OrderBot.tests
         {
             Session oSession = new Session("12345");
             String sInput = oSession.OnMessage("hello")[0];
-            Console.WriteLine(sInput);
             Assert.True(sInput.ToLower().Contains("sangeetha"));
         }
 
