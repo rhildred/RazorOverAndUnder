@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace OrderBot
 {
@@ -6,11 +7,13 @@ namespace OrderBot
     {
         private enum State
         {
-            WELCOMING, SIZE, PROTEIN
+            WELCOMING, SIZE, DESSERT
         }
 
         private State nCur = State.WELCOMING;
         private Order oOrder;
+
+        private StringBuilder orderDetails = new StringBuilder("");
 
         public Session(string sPhone)
         {
@@ -25,21 +28,21 @@ namespace OrderBot
             {
                 case State.WELCOMING:
                     aMessages.Add("Welcome to Sangeetha Restaurant!");
-                    aMessages.Add("What size would you like?");
+                    aMessages.Add("What size of meal would you like? (mini, regular, full)");
                     this.nCur = State.SIZE;
                     break;
                 case State.SIZE:
                     this.oOrder.Size = sInMessage;
+                    orderDetails.Append(this.oOrder.Size + " meal");
                     this.oOrder.Save();
-                    aMessages.Add("What protein would you like on this  " + this.oOrder.Size + " Shawarama?");
-                    this.nCur = State.PROTEIN;
+                    aMessages.Add("What veggies would you like on this " + orderDetails.ToString() + "?");
+                    this.nCur = State.DESSERT;
                     break;
-                case State.PROTEIN:
-                    string sProtein = sInMessage;
-                    aMessages.Add("What toppings would you like on this  " + this.oOrder.Size + " " + sProtein + " Shawarama?");
+                case State.DESSERT:
+                    string sDessert = sInMessage;
+                    orderDetails.Append(", " + sDessert);
+                    aMessages.Add("What dessert would you like along with this  " + orderDetails.ToString() + "?");
                     break;
-
-
             }
             aMessages.ForEach(delegate (String sMessage)
             {
@@ -47,6 +50,5 @@ namespace OrderBot
             });
             return aMessages;
         }
-
     }
 }
