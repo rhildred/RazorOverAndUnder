@@ -2,11 +2,27 @@ using System;
 using System.IO;
 using Xunit;
 using OrderBot;
+using Microsoft.Data.Sqlite;
 
 namespace OrderBot.tests
 {
     public class OrderBotTest
     {
+        public OrderBotTest()
+        {
+            using (var connection = new SqliteConnection(DB.GetConnectionString()))
+            {
+                connection.Open();
+
+                var commandUpdate = connection.CreateCommand();
+                commandUpdate.CommandText =
+                @"
+        DELETE FROM orders
+    ";
+                commandUpdate.ExecuteNonQuery();
+
+            }
+        }
         [Fact]
         public void Test1()
         {
@@ -18,6 +34,17 @@ namespace OrderBot.tests
             Session oSession = new Session("12345");
             String sInput = oSession.OnMessage("hello")[0];
             Assert.True(sInput.Contains("Welcome"));
+        }
+        [Fact]
+        public void TestWelcomPerformance()
+        {
+            DateTime oStart = DateTime.Now;
+            Session oSession = new Session("12345");
+            String sInput = oSession.OnMessage("hello")[0];
+            DateTime oFinished = DateTime.Now;
+            long nElapsed = (oFinished - oStart).Ticks;
+            System.Diagnostics.Debug.WriteLine("Elapsed Time: " + nElapsed);
+            Assert.True(nElapsed < 10000);
         }
         [Fact]
         public void TestShawarama()
