@@ -113,5 +113,94 @@ namespace OrderBot.tests
             Assert.True(sInput.ToLower().Contains("dessert"));
             Assert.True(sInput.ToLower().Contains("beans"));
         }
+
+        [Fact]
+        public void TestConfirmationYes()
+        {
+            Session oSession = new Session("12345");
+            oSession.OnMessage("hello");
+            oSession.OnMessage("mini");
+            oSession.OnMessage("sambar");
+            oSession.OnMessage("rasam");
+            oSession.OnMessage("carrot");
+            oSession.OnMessage("bean");
+            oSession.OnMessage("gulab");
+            String sInput = oSession.OnMessage("yes")[0];
+
+            Assert.True(sInput.ToLower().Contains("mini"));
+            Assert.True(sInput.ToLower().Contains("bean"));
+            Assert.True(sInput.ToLower().Contains("gulab"));
+            Assert.True(sInput.ToLower().Contains("name"));
+        }
+
+        [Fact]
+        public void TestConfirmationNo()
+        {
+            Session oSession = new Session("12345");
+            oSession.OnMessage("hello");
+            oSession.OnMessage("mini");
+            oSession.OnMessage("sambar");
+            oSession.OnMessage("rasam");
+            oSession.OnMessage("carrot");
+            oSession.OnMessage("bean");
+            oSession.OnMessage("gulab");
+            String sInput = oSession.OnMessage("no")[0];
+
+            Assert.True(sInput.ToLower().Contains("canceled"));
+        }
+
+        [Fact]
+        public void TestName()
+        {
+            Session oSession = new Session("12345");
+            oSession.OnMessage("hello");
+            oSession.OnMessage("mini");
+            oSession.OnMessage("sambar");
+            oSession.OnMessage("rasam");
+            oSession.OnMessage("carrot");
+            oSession.OnMessage("bean");
+            oSession.OnMessage("gulab");
+            oSession.OnMessage("yes");
+            String sInput = oSession.OnMessage("madu")[0];
+
+            Assert.True(sInput.ToLower().Contains("madu"));
+        }
+
+        [Fact]
+        public void TestPhone()
+        {
+            Session oSession = new Session("12345");
+            oSession.OnMessage("hello");
+            oSession.OnMessage("mini");
+            oSession.OnMessage("sambar");
+            oSession.OnMessage("rasam");
+            oSession.OnMessage("carrot");
+            oSession.OnMessage("bean");
+            oSession.OnMessage("gulab");
+            oSession.OnMessage("yes");
+            oSession.OnMessage("madu");
+            String sInput = oSession.OnMessage("226")[0];
+
+            Assert.True(sInput.ToLower().Contains("226"));
+        }
+
+        [Fact]
+        public void TestPayment()
+        {
+            Session oSession = new Session("12345");
+            oSession.OnMessage("hello");
+            oSession.OnMessage("mini");
+            oSession.OnMessage("sambar");
+            oSession.OnMessage("rasam");
+            oSession.OnMessage("carrot");
+            oSession.OnMessage("bean");
+            oSession.OnMessage("gulab");
+            oSession.OnMessage("yes");
+            oSession.OnMessage("madu");
+            oSession.OnMessage("226");
+            String sInput = oSession.OnMessage("visa")[0];
+
+            Assert.True(sInput.ToLower().Contains("confirmed"));
+        }
     }
 }

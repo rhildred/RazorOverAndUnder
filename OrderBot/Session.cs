@@ -7,7 +7,7 @@ namespace OrderBot
     {
         private enum State
         {
-            WELCOMING, SIZE, CURRY1, CURRY2, VEGGY1, VEGGY2, DESSERT
+            WELCOMING, SIZE, CURRY1, CURRY2, VEGGY1, VEGGY2, DESSERT, CONFIRM, YES, NO, NAME, PHONE, PAYMENT, FINAL_CONFIRM, DESISION
         }
 
         private State nCur = State.WELCOMING;
@@ -67,9 +67,54 @@ namespace OrderBot
                     this.nCur = State.DESSERT;
                     break;
                 case State.DESSERT:
-                    string sDessert = sInMessage;
-                    orderDetails.Append(", " + sDessert);
-                    aMessages.Add("What dessert would you like along with this  " + orderDetails.ToString() + "?");
+                    this.oOrder.Dessert1 = sInMessage;
+                    orderDetails.Append(", " + this.oOrder.Dessert1);
+                    this.oOrder.Save();
+                    aMessages.Add("Would you like to confirm  " + orderDetails.ToString() + " order? Only YES or NO allowed, other inputs will be considered as YES.");
+                    this.nCur = State.DESISION;
+                    break;
+                case State.DESISION:
+                    string confirmation = sInMessage;
+
+                    if(confirmation.ToLower() == "no")
+                    {
+                        this.nCur = State.WELCOMING;
+                        aMessages.Add("Your order is canceled.");
+                        orderDetails.Clear();
+                        this.nCur = State.WELCOMING;
+                    }
+                    else
+                    {
+                        this.nCur = State.YES;
+                        aMessages.Add("Please enter pickup name for order, " + orderDetails.ToString());
+                    }
+
+                    break;
+                case State.YES:
+                    string name = sInMessage;
+                    orderDetails.Append(". Order is in the name of " + name);
+                    aMessages.Add("Please enter the phone number for order:  " + orderDetails.ToString() + ".");
+                    this.nCur = State.PHONE;
+                    break;
+                case State.NO:
+                    aMessages.Add("Your order is canceled.");
+                    orderDetails.Clear();
+                    this.nCur = State.WELCOMING;
+                    break;
+                case State.PHONE:
+                    string phone = sInMessage;
+                    orderDetails.Append(" with phone number " + phone);
+                    aMessages.Add("Please enter the payment method for order:  " + orderDetails.ToString() + ".");
+                    this.nCur = State.PAYMENT;
+                    break;
+                case State.PAYMENT:
+                    string payment = sInMessage;
+                    orderDetails.Append(" and payment method " + payment);
+                    aMessages.Add("Your order is confirmed");
+                    this.nCur = State.FINAL_CONFIRM;
+                    break;
+                case State.FINAL_CONFIRM:
+                    aMessages.Add("Your order is confirmed");
                     break;
             }
             aMessages.ForEach(delegate (String sMessage)
