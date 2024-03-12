@@ -9,5 +9,10 @@
     <ProjectReference Include="..\OrderBot\OrderBot.csproj" />
     <PackageReference Include="Twilio" Version="5.9.8" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="OrderBot">
+      <HintPath>..\OrderBot\bin\Debug\net6.0\OrderBot.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>

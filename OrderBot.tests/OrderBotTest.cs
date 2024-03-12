@@ -32,8 +32,8 @@ namespace OrderBot.tests
         public void TestWelcome()
         {
             Session oSession = new Session("12345");
-            String sInput = oSession.OnMessage("hello")[0];
-            Assert.True(sInput.Contains("Welcome"));
+            String sInput = oSession.OnMessage("Hello")[0];
+            Assert.True(sInput.Contains("Welcome to Cafe Bot"));
         }
         [Fact]
         public void TestWelcomPerformance()
